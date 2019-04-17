@@ -14,14 +14,15 @@ class messageReceived implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    public $message;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($to_id)
     {
-        //
+        $this->message = $to_id;
     }
 
     /**
@@ -31,6 +32,7 @@ class messageReceived implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('channelNotifyForMessage');
+        // return new Channel('channelNotifyForMessage');
+        return ['notify-message'];
     }
 }

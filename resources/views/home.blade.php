@@ -15,15 +15,14 @@
                     @endif
 
                     <div class="row">
-                        <div class="col-md-2">
+                        <!-- <div class="col-md-2">
                             <ul>
-                                <li>user 2</li>
-                                <li>user 3</li>
-                                <li>user 4</li>
-                                <li>user 5</li>
+                                @foreach($users as $key => $user)
+                                    <li>{{$user->name}}</li>
+                                @endforeach
                             </ul>
-                        </div>
-                        <div class="col-md-10">
+                        </div> -->
+                        <div class="col-md-12">
                             <div class="row" style="min-height: 200px; border: 1px solid; margin: 5px;">
                                     @foreach($messages as $key => $message)
                                         <div class="{{ ($message->from_id==$authUser)?'right':'left' }}">{{$message->message}}</div>

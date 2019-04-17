@@ -88,7 +88,27 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
-    <script src="resources/assets/js/app.js"></script>
+    <!-- <script src="resources/assets/js/app.js"></script> -->
+    <script src="//js.pusher.com/3.1/pusher.min.js"></script>
     <!-- <script src="resources/assets/js/bootstrap.js"></script> -->
+    <script>
+        // Enable pusher logging - don't include this in production
+      // Pusher.logToConsole = true;
+
+      var pusher = new Pusher('6fbd6323a186f3495fff', {
+        cluster: 'ap2',
+        encrypted: true
+      });
+
+      // Subscribe to the channel we specified in our Laravel Event
+      /* Enhamcement: Here the subscription of the channel need to be enhanced to private channel, so that on the one who is receiving the message is shown the alert, and not all the users who are on the same page */
+      var channel = pusher.subscribe('notify-message');
+
+      // Bind a function to a Event (the full Laravel class)
+      channel.bind('App\\Events\\messageReceived', function(data) {
+        console.log(data.message);
+        alert(data.message);
+      });
+    </script>
 </body>
 </html>

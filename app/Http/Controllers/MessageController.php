@@ -25,16 +25,16 @@ class MessageController extends Controller
             $userId = Auth::user()->id;
             $otherParty = $userId==1?2:1;
             \DB::beginTransaction();
-	            $messageData = new Message;
-	            $messageData->from_id = Auth::user()->id;
-	            $messageData->to_id = 2;
-	            $messageData->message = $Input['message'];
-	            $messageData->save();
-	            $messages = Message::whereIn('from_id',[$userId,$otherParty])->get();
-	            event(new messageReceived());
+                $messageData = new Message;
+                $messageData->from_id = Auth::user()->id;
+                $messageData->to_id = 2;
+                $messageData->message = $Input['message'];
+                $messageData->save();
+                $messages = Message::whereIn('from_id',[$userId,$otherParty])->get();
+                event(new messageReceived($Input['message']));
             \DB::commit();
-        		// return view('home', ['messages' => $messages,'authUser'=>Auth::user()->id]);
-        		return Redirect::back();
+                // return view('home', ['messages' => $messages,'authUser'=>Auth::user()->id]);
+                return Redirect::back();
         } catch (\Exception $e) {
             \DB::rollback();
             print_r($e->getMessage()); die;

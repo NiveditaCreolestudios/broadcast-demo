@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 use App\Message;
+use App\User;
 Use Redirect;
 
 class HomeController extends Controller
@@ -29,6 +30,7 @@ class HomeController extends Controller
         $userId = Auth::user()->id;
         $otherParty = $userId==1?2:1;
         $messages = Message::whereIn('from_id',[$userId,$otherParty])->get();
-        return view('home', ['messages' => $messages,'authUser'=>Auth::user()->id]);
+        $users = User::get();
+        return view('home', ['messages' => $messages, 'users'=>$users, 'authUser'=>Auth::user()->id]);
     }
 }
